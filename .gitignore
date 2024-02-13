@@ -1,0 +1,6 @@
+./joguinho
+./joguinho_example
+*.o
+*.d
+compile_commands.json
+.cache
