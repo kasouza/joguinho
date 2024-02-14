@@ -1,6 +1,6 @@
 # PKGS to be included using pkg-config (optional)
 #PKGS :=
-PKGS := ncurses
+#PKGS := ncurses
 
 
 # Executables
@@ -9,7 +9,7 @@ TEST := "test_$(EXEC)"
 
 
 # Object files
-OBJS := $(addprefix src/,saske.o)
+OBJS := $(addprefix src/,ecs.o)
 EXEC_OBJS := $(addprefix src/,main.o)
 TEST_OBJS := $(addprefix test/,main.o test.o)
 
@@ -46,5 +46,6 @@ $(TEST): $(TEST_OBJS) $(OBJS)
 	@rm -f $*.d.tmp
 
 clean:
-	@rm $(EXEC) $(TEST)
-	@find -type f -name *.d -o -name *.o -exec rm {} \;
+	-rm $(EXEC)
+	-rm $(TEST)
+	-find -type f -name *.d -o -name *.o -exec rm {} \;
