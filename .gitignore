@@ -1,5 +1,5 @@
 ./joguinho
-./joguinho_example
+./test_joguinho
 *.o
 *.d
 compile_commands.json
