@@ -9,14 +9,14 @@ TEST := "test_$(EXEC)"
 
 
 # Object files
-OBJS := $(addprefix src/,ecs.o)
+OBJS := $(addprefix src/,ecs.o data_structures/dynarr.o)
 EXEC_OBJS := $(addprefix src/,main.o)
-TEST_OBJS := $(addprefix test/,main.o test.o)
+TEST_OBJS := $(addprefix test/,main.o test.o data_structures/dynarr.o)
 
 
 # Configs
 INCLUDE_DIRS := `(echo "$(addprefix -Ilibs/, $(LIBS))" | awk -v OFS="\n" '$$1=$$1' | sed 's/$$/\/include /')`
-CFLAGS := -Iinclude $(INCLUDE_DIRS)
+CFLAGS := -g -O0 -Iinclude $(INCLUDE_DIRS)
 LDFLAGS := $(addprefix -Llibs/, $(LIBS)) $(addprefix -l, $(LIBS))
 
 ifneq ($(PKGS),)
@@ -42,7 +42,6 @@ $(TEST): $(TEST_OBJS) $(OBJS)
 -include $(EXEC_OBJS:.o=.d)
 -include $(TEST_OBJS:.o=.d)
 
-.SECONDEXPANSION:
 %.o: %.c
 	echo $(addprefix -Ilibs/, $(LIBS))
 	gcc -c $(CFLAGS) $*.c -o $*.o
