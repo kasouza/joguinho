@@ -5,7 +5,7 @@
 typedef enum { POSITION_COMPONENT = 0, LAST_COMPONENT } Component;
 
 bool available_entities[MAX_ENTITIES];
-bool entity_components[MAX_ENTITIES][LAST_COMPONENT] = {0};
+bool entity_components[MAX_ENTITIES];
 
 ComponentsAndGroups __GLOBAL_COMPONENTS_AND_GROUPS__ = {0};
 
