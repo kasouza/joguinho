@@ -1,7 +1,7 @@
 # PKGS to be included using pkg-config (optional)
-#PKGS :=
 #PKGS := ncurses
 
+LIBS := glad glfw3 stb_image
 
 # Executables
 EXEC := joguinho
@@ -15,8 +15,9 @@ TEST_OBJS := $(addprefix test/,main.o test.o)
 
 
 # Configs
-CFLAGS := -Iinclude
-LDFLAGS :=
+INCLUDE_DIRS := `(echo "$(addprefix -Ilibs/, $(LIBS))" | awk -v OFS="\n" '$$1=$$1' | sed 's/$$/\/include /')`
+CFLAGS := -Iinclude $(INCLUDE_DIRS)
+LDFLAGS := $(addprefix -Llibs/, $(LIBS)) $(addprefix -l, $(LIBS))
 
 ifneq ($(PKGS),)
 	CFLAGS += $(shell pkg-config --cflags $(PKGS))
@@ -24,7 +25,12 @@ ifneq ($(PKGS),)
 endif
 
 # Targets
-all: $(EXEC) $(TEST)
+all: libs/build_libs $(EXEC) $(TEST)
+	echo $(CFLAGS)
+
+libs/build_libs:
+	./libs/build.sh
+	touch libs/build_libs
 
 $(EXEC): $(EXEC_OBJS) $(OBJS)
 	cc -o $@ $^ $(LDFLAGS)
@@ -35,8 +41,10 @@ $(TEST): $(TEST_OBJS) $(OBJS)
 -include $(OBJS:.o=.d)
 -include $(EXEC_OBJS:.o=.d)
 -include $(TEST_OBJS:.o=.d)
- 
+
+.SECONDEXPANSION:
 %.o: %.c
+	echo $(addprefix -Ilibs/, $(LIBS))
 	gcc -c $(CFLAGS) $*.c -o $*.o
 	gcc -MM $(CFLAGS) $*.c > $*.d
 	@mv -f $*.d $*.d.tmp

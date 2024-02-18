@@ -1,5 +1,6 @@
 #include "joguinho/components.h"
 #include "joguinho/ecs.h"
+#include "joguinho/renderer/gl.h"
 
 #include <stdbool.h>
 #include <stdio.h>
