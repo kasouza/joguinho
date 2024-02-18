@@ -71,8 +71,68 @@ bool test_array_resize() {
     return true;
 }
 
+bool test_dynarr_remove() {
+    DynArr *array = create_dynarr(int);
+
+    dynarr_push_literal(array, int, 32);
+    dynarr_push_literal(array, int, 53);
+    dynarr_push_literal(array, int, 99);
+
+    int *buf = dynarr_buffer(array, int);
+    t_ASSERT(array->len == 3);
+    t_ASSERT(dynarr_at(array, int, 0) == 32);
+    t_ASSERT(dynarr_at(array, int, 1) == 53);
+    t_ASSERT(dynarr_at(array, int, 2) == 99);
+
+    dynarr_remove(array, 1);
+
+    t_ASSERT(array->len == 2);
+    t_ASSERT(dynarr_at(array, int, 0) == 32);
+    t_ASSERT(dynarr_at(array, int, 1) == 99);
+
+    dynarr_remove(array, 0);
+    t_ASSERT(array->len == 1);
+    t_ASSERT(dynarr_at(array, int, 0) == 99);
+
+    free_dynarr(array);
+    array = NULL;
+
+    return true;
+}
+
+bool test_dynarr_unsorted_remove() {
+    DynArr *array = create_dynarr(int);
+
+    dynarr_push_literal(array, int, 32);
+    dynarr_push_literal(array, int, 53);
+    dynarr_push_literal(array, int, 99);
+
+    int *buf = dynarr_buffer(array, int);
+    t_ASSERT(array->len == 3);
+    t_ASSERT(dynarr_at(array, int, 0) == 32);
+    t_ASSERT(dynarr_at(array, int, 1) == 53);
+    t_ASSERT(dynarr_at(array, int, 2) == 99);
+
+    dynarr_unsorted_remove(array, 1);
+
+    t_ASSERT(array->len == 2);
+    t_ASSERT(dynarr_at(array, int, 0) == 32);
+    t_ASSERT(dynarr_at(array, int, 1) == 99);
+
+    dynarr_unsorted_remove(array, 0);
+    t_ASSERT(array->len == 1);
+    t_ASSERT(dynarr_at(array, int, 0) == 99);
+
+    free_dynarr(array);
+    array = NULL;
+
+    return true;
+}
+
 void test_suite_dynarr() {
     t_register_test(test_array_create);
     t_register_test(test_array_push);
     t_register_test(test_array_resize);
+    t_register_test(test_dynarr_remove);
+    t_register_test(test_dynarr_unsorted_remove);
 }

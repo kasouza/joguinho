@@ -55,6 +55,26 @@ void dynarr_push(DynArr *dynarr, void *item) {
     dynarr->len++;
 }
 
+void dynarr_remove(DynArr *dynarr, size_t idx) {
+    for (size_t i = idx; i < dynarr->len - 1; i++) {
+        for (size_t j = 0; j < dynarr->stride; j++) {
+            dynarr->dat[i * dynarr->stride + j] =
+                dynarr->dat[(i + 1) * dynarr->stride + j];
+        }
+    }
+
+    dynarr->len--;
+}
+
+void dynarr_unsorted_remove(DynArr *dynarr, size_t idx) {
+    for (size_t j = 0; j < dynarr->stride; j++) {
+        dynarr->dat[idx * dynarr->stride + j] =
+            dynarr->dat[(dynarr->len - 1) * dynarr->stride + j];
+    }
+
+    dynarr->len--;
+}
+
 void free_dynarr(DynArr *dynarr) {
     assert(dynarr->dat != NULL);
     assert(dynarr != NULL);

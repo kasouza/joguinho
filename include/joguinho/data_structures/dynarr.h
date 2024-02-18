@@ -15,7 +15,7 @@ typedef struct {
 #define create_dynarr(type) _create_dynarr(sizeof(type), DYNARR_INITIAL_CAP)
 DynArr *_create_dynarr(size_t stride, size_t cap);
 
-#define dynarr_buffer(dynarr, type) ((type *)dynarr)
+#define dynarr_buffer(dynarr, type) ((type *)dynarr->dat)
 
 #define dynarr_at(dynarr, type, idx) (dynarr_buffer(dynarr, type)[idx])
 #define dynarr_set(dynarr, type, idx, item)                                    \
@@ -30,6 +30,8 @@ void dynarr_resize(DynArr *dynarr, size_t new_cap);
     } while (false)
 
 void dynarr_push(DynArr *dynarr, void *item);
+void dynarr_unsorted_remove(DynArr *dynarr, size_t idx);
+void dynarr_remove(DynArr *dynarr, size_t idx);
 
 void free_dynarr(DynArr *dynarr);
 
