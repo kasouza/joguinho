@@ -1,8 +1,9 @@
 #ifndef KASOUZA_JOGUINHO_INCLUDE_JOGUINHO_RENDERER_INCLUDE_JOGUINHO_RENDERER_GL_H
 #define KASOUZA_JOGUINHO_INCLUDE_JOGUINHO_RENDERER_INCLUDE_JOGUINHO_RENDERER_GL_H
 
+// clang-format off
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+// clang-format on
 
 #endif
-
