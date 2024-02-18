@@ -58,6 +58,13 @@ bool test_array_push() {
     return true;
 }
 
+bool test_dynarr_set() {
+    DynArr *array = create_dynarr(int);
+    t_ASSERT(array->cap == DYNARR_INITIAL_CAP);
+
+    return true;
+}
+
 bool test_array_resize() {
     DynArr *array = create_dynarr(int);
     t_ASSERT(array->cap == DYNARR_INITIAL_CAP);

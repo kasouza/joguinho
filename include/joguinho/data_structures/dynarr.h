@@ -18,8 +18,9 @@ DynArr *_create_dynarr(size_t stride, size_t cap);
 #define dynarr_buffer(dynarr, type) ((type *)dynarr->dat)
 
 #define dynarr_at(dynarr, type, idx) (dynarr_buffer(dynarr, type)[idx])
-#define dynarr_set(dynarr, type, idx, item)                                    \
-    (dynarr_buffer(dynarr, type)[idx] = item)
+
+#define dynarr_bytes_at(dynarr, idx)                                           \
+    (dynarr_buffer(dynarr, char) + (idx)*dynarr->stride)
 
 void dynarr_resize(DynArr *dynarr, size_t new_cap);
 
@@ -29,6 +30,13 @@ void dynarr_resize(DynArr *dynarr, size_t new_cap);
         dynarr_push(dynarr, &__DYNARR_TEMP_ITEM__);                            \
     } while (false)
 
+#define dynarr_set_literal(dynarr, type, idx, item)                            \
+    do {                                                                       \
+        type __DYNARR_TEMP_ITEM__ = item;                                      \
+        _dynarr_set(dynarr, idx, &item);                                       \
+    } while (false)
+
+void dynarr_set(DynArr *dynarr, size_t idx, void *item);
 void dynarr_push(DynArr *dynarr, void *item);
 void dynarr_unsorted_remove(DynArr *dynarr, size_t idx);
 void dynarr_remove(DynArr *dynarr, size_t idx);

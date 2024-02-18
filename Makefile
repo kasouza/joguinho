@@ -9,9 +9,9 @@ TEST := "test_$(EXEC)"
 
 
 # Object files
-OBJS := $(addprefix src/,ecs.o data_structures/dynarr.o)
+OBJS := $(addprefix src/,ecs.o data_structures/dynarr.o data_structures/map.o)
 EXEC_OBJS := $(addprefix src/,main.o)
-TEST_OBJS := $(addprefix test/,main.o test.o data_structures/dynarr.o)
+TEST_OBJS := $(addprefix test/,main.o test.o data_structures/dynarr.o data_structures/map.o)
 
 
 # Configs

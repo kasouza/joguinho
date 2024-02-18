@@ -51,8 +51,21 @@ void dynarr_push(DynArr *dynarr, void *item) {
         dynarr_resize(dynarr, dynarr->cap * 2);
     }
 
-    memcpy(dynarr->dat + dynarr->stride * dynarr->len, item, dynarr->stride);
+    size_t idx = dynarr->len;
     dynarr->len++;
+
+    dynarr_set(dynarr, idx, item);
+}
+
+void dynarr_set(DynArr *dynarr, size_t idx, void *item) {
+    assert(dynarr != NULL);
+    assert(dynarr->dat != NULL);
+    assert(idx < dynarr->len);
+
+    char *data = item;
+    for (size_t j = 0; j < dynarr->stride; j++) {
+        dynarr->dat[idx * dynarr->stride + j] = data[j];
+    }
 }
 
 void dynarr_remove(DynArr *dynarr, size_t idx) {
